@@ -10,58 +10,75 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double padding = width * 0.05;
     ThemeData theme = Theme.of(context);
 
     return Scaffold(
       backgroundColor: theme.canvasColor,
       // Dashboard's header.
-      appBar: AppBar(
-          elevation: 0.0,
-          shadowColor: Colors.transparent,
-          backgroundColor: theme.canvasColor,
-          title: Text.rich(TextSpan(children: [
-            for (int x = 0; x < 2; x++)
-              TextSpan(
-                  text: ['Welcome, ', 'User'][x],
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: [FontWeight.normal, FontWeight.bold][x],
-                  ))
-          ]))),
+      appBar: _header(theme: theme),
 
       // Dashboard's body.
       body: Column(
         children: [
           // Horizontal list.
-          SizedBox(
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: padding),
             height: 200,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: 10,
-                itemBuilder: (_, x) => _horItem(context, isLast: x == 9)),
+                itemBuilder: (_, x) => _horItem(
+                      isLast: x == 9,
+                      padding: padding,
+                      theme: theme,
+                    )),
           ),
 
           // Vertical list.
           Expanded(
-              child: ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (_, x) => _verItem(context, isLast: x == 9)))
+              child: Padding(
+            padding: EdgeInsets.all(padding),
+            child: ListView.builder(
+                itemCount: 10,
+                itemBuilder: (_, x) => _verItem(
+                      isLast: x == 9,
+                      padding: padding,
+                      theme: theme,
+                      width: width,
+                    )),
+          ))
         ],
       ),
     );
   }
 }
 
-/// Horizontal item of [Dashboard].
-Widget _horItem(BuildContext context, {required bool isLast}) {
-  ThemeData theme = Theme.of(context);
-  double padding = MediaQuery.of(context).size.width * 0.05;
+/// Header of [Dashboard].
+PreferredSizeWidget _header({required ThemeData theme}) {
+  return AppBar(
+      elevation: 0.0,
+      shadowColor: Colors.transparent,
+      backgroundColor: theme.canvasColor,
+      title: Text.rich(TextSpan(children: [
+        for (int x = 0; x < 2; x++)
+          TextSpan(
+              text: ['Welcome, ', 'User'][x],
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: [FontWeight.normal, FontWeight.bold][x],
+              ))
+      ])));
+}
 
+/// Horizontal item of [Dashboard].
+Widget _horItem(
+    {required bool isLast, required ThemeData theme, required double padding}) {
   return Container(
       width: 200,
       margin: EdgeInsets.only(
-        left: padding,
-        right: isLast ? padding : 0.0,
+        right: isLast ? 0.0 : padding,
       ),
       padding: EdgeInsets.all(padding / 2),
       decoration: BoxDecoration(
@@ -93,16 +110,15 @@ Widget _horItem(BuildContext context, {required bool isLast}) {
 }
 
 /// Vertical item of [Dashboard].
-Widget _verItem(BuildContext context, {required bool isLast}) {
-  ThemeData theme = Theme.of(context);
-  double width = MediaQuery.of(context).size.width;
-  double padding = width * 0.05;
-
+Widget _verItem(
+    {required ThemeData theme,
+    required double padding,
+    required double width,
+    required bool isLast}) {
   return Container(
       decoration: BoxDecoration(
           color: theme.cardColor, borderRadius: BorderRadius.circular(5.0)),
-      margin: EdgeInsets.fromLTRB(
-          padding, padding, padding, isLast ? padding : 0.0),
+      margin: EdgeInsets.only(bottom: isLast ? 0.0 : padding),
       padding: EdgeInsets.all(padding / 2),
       height: 200,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
