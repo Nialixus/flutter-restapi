@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restapi_sample/src/login/login_cubit.dart';
+import 'package:restapi_sample/src/login/login_model.dart';
 import 'package:restapi_sample/src/login/login_page.dart';
 
-void main() {
+void main() async {
+  auth(const LoginInput(email: 'myEmail@gmai.com', password: 'myPassword'));
+  /*
   runApp(MaterialApp(
       title: 'Flutter Rest API Demo',
       debugShowCheckedModeBanner: false,
@@ -13,8 +17,5 @@ void main() {
           canvasColor: const Color(0xffffffff),
           primaryColor: const Color(0xff247881),
           backgroundColor: const Color(0xffBDD6D9)),
-      home: BlocProvider(
-        create: (_) => LoginCubit(),
-        child: const Login(),
-      )));
+      home: const Login()));*/
 }
