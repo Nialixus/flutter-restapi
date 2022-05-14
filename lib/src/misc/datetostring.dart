@@ -11,7 +11,7 @@ extension DateTimeExtension on DateTime {
 
 /// A method of converting [DateTime] to structure string.
 String dateToString(DateTime dateTime) {
-  /// List of months in indonesian.
+  // List of months in indonesian.
   List<String> months = [
     'Januari',
     'Februari',
@@ -26,6 +26,7 @@ String dateToString(DateTime dateTime) {
     'November',
     'Desember'
   ];
+  // Gotta make sure how many months in list.
   assert(months.length == 12);
 
   return '${dateTime.day} ${months[dateTime.month - 1]} ${dateTime.year}, ${dateTime.hour}:${dateTime.minute}:${dateTime.second}';

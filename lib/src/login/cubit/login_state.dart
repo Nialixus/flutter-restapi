@@ -1,8 +1,6 @@
-import 'login_cubit.dart';
-import 'login_model.dart';
-import 'package:equatable/equatable.dart';
+part of 'login_cubit.dart';
 
-/// Mother class of every state used in Login.
+/// Mother class of every state used in [LoginCubit].
 abstract class LoginState extends Equatable {}
 
 /// State when app start do nothing.
