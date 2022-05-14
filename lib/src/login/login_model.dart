@@ -1,51 +1,103 @@
-import 'dart:convert';
-
-import 'package:json_annotation/json_annotation.dart';
-
-part 'login_model.g.dart';
-
-/// Model used in user's authentication.
-class LoginInput {
-  /// Used to authenticating user. Requires 2 variable inserted by user.
-  const LoginInput({required this.email, required this.password});
-
-  final String email;
-  final String password;
-}
-
-/// [Response] converter.
-@JsonSerializable(anyMap: true)
-class LoginOutput {
-  /// Convert [Response] to readable [LoginOutput].
-  const LoginOutput({
+/// [Response] converter used in user's authentication.
+class LoginResponse {
+  /// Convert [Response] to readable [LoginResponse].
+  const LoginResponse({
     required this.code,
     required this.status,
     required this.message,
     required this.userName,
-    required this.userEmail,
-    required this.phoneNumber,
-    required this.userCreatedDate,
-    required this.userCreatedTimezonetype,
-    required this.userCreatedTimezone,
     required this.userUuid,
+    required this.userEmail,
+    required this.userPhonenumber,
+    required this.userCreatedDate,
+    required this.userCreatedTimezone,
+    required this.userCreatedTimezonetype,
   });
 
+  ///```json
+  ///{"code": 200, ...}
+  ///```
   final int code;
+
+  ///```json
+  ///{"status": true, ...}
+  ///```
   final bool status;
+
+  ///```json
+  ///{"message": "User logged in", ...}
+  ///```
   final String message;
+
+  ///```json
+  ///{"user":
+  ///   {"name": "John Smith", ...}
+  ///}
+  ///```
   final String userName;
+
+  ///```json
+  ///{"user":
+  ///   {"uuid": "ec155431-a85b", ...}
+  ///}
+  ///```
   final String userUuid;
+
+  ///```json
+  ///{"user":
+  ///   {"email": "sample@mail.com", ...}
+  ///}
+  ///```
   final String userEmail;
-  @JsonKey(fromJson: user)
-  final String phoneNumber;
+
+  ///```json
+  ///{"user":
+  ///   {"phone_number": "+12345678", ...}
+  ///}
+  ///```
+  final String userPhonenumber;
+
+  ///```json
+  ///{"user":
+  ///   {"created":
+  ///       {"date": "1975-01-01", ...}
+  ///   }
+  ///}
+  ///```
   final DateTime userCreatedDate;
+
+  ///```json
+  ///{"user":
+  ///   {"created":
+  ///       {"timezone": "UTC", ...}
+  ///   }
+  ///}
+  ///```
   final String userCreatedTimezone;
+
+  ///```json
+  ///{"user":
+  ///   {"created":
+  ///       {"timezone_type": 3, ...}
+  ///   }
+  ///}
+  ///```
   final int userCreatedTimezonetype;
 
-  factory LoginOutput.fromJson(Map<String, dynamic> json) =>
-      _$LoginOutputFromJson(json);
-
-  Map<String, dynamic> toJson() => _$LoginOutputToJson(this);
-
-  static String user(Map<dynamic, dynamic> user) => user.toString();
+  /// Decode [Response] to [LoginResponse].
+  factory LoginResponse.fromJson(Map<String, dynamic> json) {
+    return LoginResponse(
+      code: json['code'] as int,
+      status: json['status'] as bool,
+      message: json['message'] as String,
+      userName: json['user']['name'] as String,
+      userUuid: json['user']['uuid'] as String,
+      userEmail: json['user']['email'] as String,
+      userPhonenumber: json['user']['phone_number'] as String,
+      userCreatedTimezone: json['user']['created']['timezone'] as String,
+      userCreatedTimezonetype: json['user']['created']['timezone_type'] as int,
+      userCreatedDate:
+          DateTime.parse(json['user']['created']['date'] as String),
+    );
+  }
 }
