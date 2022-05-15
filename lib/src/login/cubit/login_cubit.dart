@@ -9,13 +9,14 @@ part 'login_state.dart';
 
 /// State Management for [LoginState].
 class LoginCubit extends Cubit<LoginState> {
-  /// Stating what state is [LoginState] at the moment.
+  /// Set whatever active state of [LoginState] at the time.
   LoginCubit() : super(LoginInit());
 
-  /// Authenticating user's.
+  /// Authenticating user.
   auth({required String email, required String password}) async {
     // Set state as [LoginLoading].
     emit(LoginLoading());
+
     // Do POST to get response.
     final Response response = await post(
       Uri.parse('https://demo.treblle.com/api/v1/auth/login'),
@@ -45,16 +46,18 @@ class LoginCubit extends Cubit<LoginState> {
         emit(LoginFailed(message: 'Code ${output.code} : Login Failed'));
       }
     }
-    // Set state as [LoginFailed].
+    // Catch exception from decoding [Response].
+    //
+    // [Set state as [LoginFailed].
     catch (e) {
-      // Whether email requirement is fulfilled or not.
+      // Check whether email requirement is fulfilled or not.
       bool emailReq =
           email.contains('@') ? email.split('@').last.isNotEmpty : false;
 
-      // Whether password requirement is fulfilled or not.
+      // Check whether password requirement is fulfilled or not.
       bool passReq = password.length >= 5;
 
-      // A couple case of what message should be displayed.
+      // A couple case of what message should be displayed to user.
       String message() {
         if (emailReq && !passReq) {
           return 'Password is invalid';

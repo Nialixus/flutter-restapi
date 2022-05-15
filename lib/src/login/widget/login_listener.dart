@@ -32,7 +32,9 @@ class LoginListener extends StatelessWidget {
               MaterialPageRoute(
                 builder: (listen) => BlocProvider(
                     create: (listen) => DashboardCubit(),
-                    child: const Dashboard()),
+                    child: Dashboard(
+                      name: state.response.userName,
+                    )),
               ));
         }
         // [LoginFailed] displaying alert message.

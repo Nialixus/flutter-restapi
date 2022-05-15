@@ -1,5 +1,5 @@
 name: restapi_sample
-description: A new Flutter project.
+description: A Sample of flutter_bloc cubit to fetching API.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.

@@ -3,7 +3,7 @@ part of 'login_cubit.dart';
 /// Mother class of every state used in [LoginCubit].
 abstract class LoginState extends Equatable {}
 
-/// State when app start do nothing.
+/// Initiate state with nothing.
 class LoginInit extends LoginState {
   @override
   List<Object> get props => [];

@@ -1,17 +1,18 @@
 part of 'dashboard.dart';
 
-/// Headers for [Dashboard].
+/// Header for [Dashboard].
 class DashboardHeader {
-  static Widget loaded({required String user}) => Text.rich(TextSpan(children: [
+  /// Displayed [name] that passed from [Login] when [DashboardArticle] sucessfully fetched.
+  static Widget loaded({required String name}) => Text.rich(TextSpan(children: [
         for (int x = 0; x < 2; x++)
           TextSpan(
-              text: ['Welcome, ', user][x],
+              text: ['Welcome, ', name][x],
               style: TextStyle(
-                color: Colors.black,
-                fontWeight: [FontWeight.normal, FontWeight.bold][x],
-              ))
+                  color: Colors.black,
+                  fontWeight: [FontWeight.normal, FontWeight.bold][x]))
       ]));
 
+  /// Displayed while device fetching [DashboardArticle].
   static Widget loading({required ThemeData theme}) {
     Text text = Text.rich(TextSpan(children: [
       for (int x = 0; x < 2; x++)
@@ -23,11 +24,12 @@ class DashboardHeader {
             ))
     ]));
 
+    // Displaying shimmering widget.
     return LayoutBuilder(builder: (_, layout) {
       TextPainter painter = TextPainter(
-          text: text.textSpan,
-          textDirection: text.textDirection ?? TextDirection.ltr)
-        ..layout(
+        text: text.textSpan,
+        textDirection: text.textDirection ?? TextDirection.ltr,
+      )..layout(
           minWidth: layout.minWidth,
           maxWidth: layout.maxWidth,
         );
@@ -36,7 +38,7 @@ class DashboardHeader {
           width: painter.width,
           height: painter.height,
           child: LinearProgressIndicator(
-            color: theme.primaryColorDark,
+            color: theme.canvasColor,
             backgroundColor: theme.primaryColorLight,
           ));
     });

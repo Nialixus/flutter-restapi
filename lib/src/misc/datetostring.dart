@@ -1,6 +1,8 @@
-/// Make a shortcut of converting [DateTime] to structured [String].
+export 'datetostring.dart' hide dateToString;
+
+/// Shortcut of converting [DateTime] to structured [String].
 extension DateTimeExtension on DateTime {
-  /// Convert [DateTime] to structured string.
+  /// Convert [DateTime] to structured [String].
   ///
   /// ```dart
   /// String readableDate = DateTime(1975).toReadableString;
@@ -9,7 +11,7 @@ extension DateTimeExtension on DateTime {
   String get toReadableString => dateToString(this);
 }
 
-/// A method of converting [DateTime] to structure string.
+/// A method for converting [DateTime] to structured [String].
 String dateToString(DateTime dateTime) {
   // List of months in indonesian.
   List<String> months = [
