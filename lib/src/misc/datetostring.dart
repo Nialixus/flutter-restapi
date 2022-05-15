@@ -1,6 +1,6 @@
 export 'datetostring.dart' hide dateToString;
 
-/// Shortcut of converting [DateTime] to structured [String].
+/// Shortcut for converting [DateTime] to structured [String].
 extension DateTimeExtension on DateTime {
   /// Convert [DateTime] to structured [String].
   ///
